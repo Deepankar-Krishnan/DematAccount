@@ -54,11 +54,11 @@ public class MultiValueHashMap {
 		}		
 	}
 	
-	public List <UserTransaction> getUserTransactionMap(int accountNumber){
-		List <UserTransaction> userTransactionList = new ArrayList <UserTransaction>();
+	public List <String> getUserTransactionMap(int accountNumber){
+		List <String> userTransactionList = new ArrayList <String>();
 		if(this.userTransactionMap.containsKey(accountNumber)) {
 			for(UserTransaction userTransaction: this.userTransactionMap.get(accountNumber)) {
-				userTransactionList.add(userTransaction);
+				userTransactionList.add(userTransaction.toString());
 			}
 		}
 		return userTransactionList;

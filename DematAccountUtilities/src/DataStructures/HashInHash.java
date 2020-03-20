@@ -38,11 +38,11 @@ public class HashInHash {
 		}		
 	}
 	
-	public List <UserShare> getUserShareMap(int accountNumber){
-		List <UserShare> userShareList = new ArrayList <UserShare> ();
+	public List <String> getUserShareMap(int accountNumber){
+		List <String> userShareList = new ArrayList <String> ();
 		if (this.userShareMap.containsKey(accountNumber)) {
 			for(String userShareName: this.userShareMap.get(accountNumber).keySet()) {
-				userShareList.add(this.userShareMap.get(accountNumber).get(userShareName));
+				userShareList.add(this.userShareMap.get(accountNumber).get(userShareName).toString());
 			}
 		}
 		return userShareList;
