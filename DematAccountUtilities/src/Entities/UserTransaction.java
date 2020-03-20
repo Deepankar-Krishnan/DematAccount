@@ -14,6 +14,7 @@ public class UserTransaction {
 
 	private int accountNumber;
 	private LocalDateTime transactionDateTime;
+	private String shareName;
 	private String transactionType;
 	private double sharePrice;
 	private int shareQuantity;
@@ -22,9 +23,10 @@ public class UserTransaction {
 		
 	}
 	
-	public UserTransaction(int accountNumber, String transactionType, double sharePrice, int shareQuantity) {
+	public UserTransaction(int accountNumber, String shareName, String transactionType, double sharePrice, int shareQuantity) {
 		this.accountNumber = accountNumber;
 		this.transactionDateTime = LocalDateTime.now();
+		this.shareName = shareName;
 		this.transactionType = transactionType;
 		this.sharePrice = sharePrice;
 		this.shareQuantity = shareQuantity;
@@ -73,12 +75,12 @@ public class UserTransaction {
 	}
 	
 	public String toString() {
-		return this.accountNumber+","+this.getTransactionDateTime()+","+this.transactionType+","+this.sharePrice+","+this.shareQuantity;
+		return this.accountNumber+","+this.getTransactionDateTime()+","+this.shareName+","+this.transactionType+","+this.sharePrice+","+this.shareQuantity;
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("Testing the attributes");
-		UserTransaction deepankarTransaction = new UserTransaction (123456, "Buy", 190.68, 150);
+		UserTransaction deepankarTransaction = new UserTransaction (123456, "Adani", "Buy", 190.68, 150);
 		System.out.println(deepankarTransaction.toString());
 		System.out.println(deepankarTransaction.transactionDateTime);
 

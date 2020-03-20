@@ -44,7 +44,7 @@ public class UserShare {
 		return;
 	}
 
-	public void setAveragePrice(double averageSharePrice) {
+	public void setAverageSharePrice(double averageSharePrice) {
 		this.averageSharePrice = averageSharePrice;
 		return;
 	}

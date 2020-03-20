@@ -20,7 +20,7 @@ public class DatabaseMaintainer {
 	
 	public static void writeFile(List <String> dataList, String entityType) throws IOException {
 		
-		BufferedWriter myWriter = new BufferedWriter(new FileWriter("C:/Users/kddeepan/eclipse-workspace/DematAccountUtilities/bin/"+entityType+".txt"));
+		BufferedWriter myWriter = new BufferedWriter(new FileWriter("C:/Users/kddeepan/git/repository/DematAccountUtilities/bin/"+entityType+".txt"));
 		for(String data: dataList) {
 			myWriter.write(data);
 			myWriter.newLine();
@@ -29,7 +29,7 @@ public class DatabaseMaintainer {
 	}
 	
 	public static List <String> readFile(String entityType) throws IOException {
-		BufferedReader myReader = new BufferedReader(new FileReader ("C:/Users/kddeepan/eclipse-workspace/DematAccountUtilities/bin/"+entityType+".txt")); 
+		BufferedReader myReader = new BufferedReader(new FileReader ("C:/Users/kddeepan/git/repository/DematAccountUtilities/bin/"+entityType+".txt")); 
 		List <String> dataList = new ArrayList <String>();
 		String data;
 		while((data = myReader.readLine())!=null) {
@@ -49,6 +49,7 @@ public class DatabaseMaintainer {
         System.out.println(loader.getResource("Database/DatabaseMaintainer.class"));
         DatabaseMaintainer.writeFile(new ArrayList <String>(Arrays.asList("Deepankar,123,45.60","Krishna,456,123.54","Murthy,675,234.87","Sandeep,3526,780.23","Chaitu,65234,893.20")),"UserData");
         System.out.println(DatabaseMaintainer.readFile("UserData"));
-    }
-
+        DatabaseMaintainer.writeFile(new ArrayList <String>(Arrays.asList("Vamsi,123,45.60")),"UserData");
+        System.out.println(DatabaseMaintainer.readFile("UserData"));	
+	}
 }
