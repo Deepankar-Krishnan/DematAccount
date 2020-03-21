@@ -3,26 +3,40 @@
  */
 package Entities;
 
+import java.util.UUID;
+
 /**
  * @author kddeepan
  *
  */
-public class UserData {
+public class UserData{
 	
+	/**
+	 * 
+	 */
 	private String userName;
 	private int accountNumber;
 	private double accountBalance;
+	private String accountPassword;
 	
 	public UserData () {
 		
 	}
 	
-	public UserData (String userName, int accountNumber, double accountBalance) {
+	public UserData (String userName, String accountPassword) {
+		this.userName = userName;
+		this.accountNumber = getUniqueNumber();
+		this.accountBalance = 10000.00;
+		this.accountPassword = accountPassword;
+	}
+	
+	public UserData (String userName, int accountNumber, double accountBalance, String accountPassword) {
 		this.userName = userName;
 		this.accountNumber = accountNumber;
 		this.accountBalance = accountBalance;
+		this.accountPassword = accountPassword;
 	}
-	
+
 	public String getUserName() {
 		return this.userName;
 	}
@@ -36,31 +50,51 @@ public class UserData {
 		return this.accountBalance;
 	}
 	
+	public String getAccountPassword() {
+		return this.accountPassword;
+	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
-		return;
 	}
 	
 	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
-		return;
 	}
 	
-	public void setAccountBalance(int accountBalance) {
+	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
-		return;
+	}
+	
+	public void setAccountPassword(String accountPassword) {
+		this.accountPassword = accountPassword;
 	}
 	
 	public String toString() {
-		return this.userName+","+this.accountNumber+","+this.accountBalance;
+		return this.userName+","+this.accountNumber+","+this.accountBalance+","+this.accountPassword;
+	}
+	
+	public static int getUniqueNumber() {
+		UUID uniqueID = UUID.randomUUID();
+        String stringID=""+uniqueID;        
+        int uniqueInteger = stringID.hashCode();
+        stringID = ""+uniqueInteger;
+        stringID = stringID.replaceAll("-", "");
+        uniqueInteger = Integer.parseInt(stringID);
+        return uniqueInteger;
 	}
 
 	public static void main (String [] args) {
-		UserData userDeepankar = new UserData("Deepankar", 719601, 10000);
-		UserData userSandeep = new UserData("Sandeep", 8147, 20000);
-		
-		System.out.println(userDeepankar.getAccountNumber()+","+userDeepankar.getUserName()+","+userDeepankar.getAccountBalance());
-		System.out.println(userSandeep.getAccountNumber()+","+userSandeep.getUserName()+","+userSandeep.getAccountBalance());
+		for(int i =0; i<10;i++) {
+			UUID uniqueID = UUID.randomUUID();
+	        String stringID=""+uniqueID;        
+	        int uniqueInteger = stringID.hashCode();
+	        stringID = ""+uniqueInteger;
+	        stringID = stringID.replaceAll("-", "");
+	        uniqueInteger = Integer.parseInt(stringID);
+			System.out.println(i);
+			System.out.println(uniqueInteger);
+			}
 		
 	}
 	

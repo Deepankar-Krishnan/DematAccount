@@ -2,36 +2,36 @@ package Entities;
 
 public class ApplicableCharge {
 	
-	private double transactionCharge;
-	private double securitiesTransferTax;
+	private double transactionChargeRate;
+	private double securitiesTransferTaxRate;
 	
 	public ApplicableCharge() {
 		
 	}
 	
 	public ApplicableCharge(double transactionCharge, double securitiesTransferTax) {
-		this.transactionCharge = transactionCharge;
-		this.securitiesTransferTax = securitiesTransferTax;
+		this.transactionChargeRate = transactionCharge;
+		this.securitiesTransferTaxRate = securitiesTransferTax;
 	}
 	
 	public double getTransactionCharge() {
-		return this.transactionCharge;
+		return this.transactionChargeRate;
 	}
 
 	public double getSecuritiesTransferTax() {
-		return this.securitiesTransferTax;
+		return this.securitiesTransferTaxRate;
 	}
 
 	public void setTransactionCharge(double transactionCharge) {
-		this.transactionCharge = transactionCharge;
+		this.transactionChargeRate = transactionCharge;
 	}
 	
 	public void setSecuritiesTransferTax(double securitiesTransferTax) {
-		this.securitiesTransferTax = securitiesTransferTax;
+		this.securitiesTransferTaxRate = securitiesTransferTax;
 	}
 
 	public String toString() {
-		return this.transactionCharge+","+this.securitiesTransferTax;
+		return this.transactionChargeRate+","+this.securitiesTransferTaxRate;
 	}
 
 	public static void main (String [] args) {

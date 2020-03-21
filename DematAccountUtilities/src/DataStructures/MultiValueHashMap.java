@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Database.DatabaseMaintainer;
 import Entities.UserTransaction;
 
 /**
@@ -16,56 +17,63 @@ import Entities.UserTransaction;
  */
 public class MultiValueHashMap {
 	
-	private Map<Integer, List <UserTransaction>> userTransactionMap;
+	private static Map<Integer, List <UserTransaction>> userTransactionMap;
+	
+	static {
+		MultiValueHashMap.userTransactionMap = new HashMap<Integer, List<UserTransaction>>();
+	}
 
-	public MultiValueHashMap(){
-			this.userTransactionMap = new HashMap<Integer, List<UserTransaction>>();
+	private MultiValueHashMap(){
+
 	}
 	
 	public Map<Integer, List <UserTransaction>> getUserTransactionMap(){
-		return this.userTransactionMap;
+		return MultiValueHashMap.userTransactionMap;
 	}
 	
 	public void setUserTransactionMap(Map <Integer, List <UserTransaction>> userTransactionMap) {
-		this.userTransactionMap = userTransactionMap;
+		MultiValueHashMap.userTransactionMap = userTransactionMap;
 	}
 	
-	public List <String> storeUserTransactionMap() {		
+	private static List <String> storeUserTransactionMap() {		
 		List <String> dataList = new ArrayList <String> ();		
-			for(int accountNumber: this.userTransactionMap.keySet()) {
-				for(UserTransaction userTransaction: this.userTransactionMap.get(accountNumber)) {
+			for(int accountNumber: MultiValueHashMap.userTransactionMap.keySet()) {
+				for(UserTransaction userTransaction: MultiValueHashMap.userTransactionMap.get(accountNumber)) {
 					dataList.add(userTransaction.toString());
 				}
 			}
 		return dataList;
 	}
 	
-	public void createUserTransactionMap(List <String> dataList) {
+	private static void createUserTransactionMap(List <String> dataList) {
 		String [] userTransactionAttribute;
 		for(String userTransactionData: dataList) {
 			userTransactionAttribute = userTransactionData.split(",");
-			if(this.userTransactionMap.containsKey(Integer.parseInt(userTransactionAttribute[0]))){
-				this.userTransactionMap.get(Integer.parseInt(userTransactionAttribute[0])).add(new UserTransaction(Integer.parseInt(userTransactionAttribute[0]),userTransactionAttribute[1],userTransactionAttribute[2],Double.parseDouble(userTransactionAttribute[3]),Integer.parseInt(userTransactionAttribute[4])));
+			if(MultiValueHashMap.userTransactionMap.containsKey(Integer.parseInt(userTransactionAttribute[0]))){
+				MultiValueHashMap.userTransactionMap.get(Integer.parseInt(userTransactionAttribute[0])).add(new UserTransaction(Integer.parseInt(userTransactionAttribute[0]),Integer.parseInt(userTransactionAttribute[1]),userTransactionAttribute[2],userTransactionAttribute[3],userTransactionAttribute[4],userTransactionAttribute[5],Double.parseDouble(userTransactionAttribute[6]),Integer.parseInt(userTransactionAttribute[7])));
 			}
 			else {
-				this.userTransactionMap.put(Integer.parseInt(userTransactionAttribute[0]), new ArrayList <UserTransaction> ());
-				this.userTransactionMap.get(Integer.parseInt(userTransactionAttribute[0])).add(new UserTransaction(Integer.parseInt(userTransactionAttribute[0]),userTransactionAttribute[1],userTransactionAttribute[2],Double.parseDouble(userTransactionAttribute[3]),Integer.parseInt(userTransactionAttribute[4])));
+				MultiValueHashMap.userTransactionMap.put(Integer.parseInt(userTransactionAttribute[0]), new ArrayList <UserTransaction> ());
+				MultiValueHashMap.userTransactionMap.get(Integer.parseInt(userTransactionAttribute[0])).add(new UserTransaction(Integer.parseInt(userTransactionAttribute[0]),Integer.parseInt(userTransactionAttribute[1]),userTransactionAttribute[2],userTransactionAttribute[3],userTransactionAttribute[4],userTransactionAttribute[5],Double.parseDouble(userTransactionAttribute[6]),Integer.parseInt(userTransactionAttribute[7])));
 			}
 		}		
 	}
 	
-	public List <String> getUserTransactionMap(int accountNumber){
-		List <String> userTransactionList = new ArrayList <String>();
-		if(this.userTransactionMap.containsKey(accountNumber)) {
-			for(UserTransaction userTransaction: this.userTransactionMap.get(accountNumber)) {
-				userTransactionList.add(userTransaction.toString());
+	public static List <UserTransaction> getUserTransactionMap(int accountNumber){
+		MultiValueHashMap.createUserTransactionMap(DatabaseMaintainer.readEntities("UserTransaction"));
+		List <UserTransaction> userTransactionList = new ArrayList <UserTransaction>();
+		if(MultiValueHashMap.userTransactionMap.containsKey(accountNumber)) {
+			for(UserTransaction userTransaction: MultiValueHashMap.userTransactionMap.get(accountNumber)) {
+				userTransactionList.add(userTransaction);
+				DatabaseMaintainer.writeEntities(MultiValueHashMap.storeUserTransactionMap(), "UserTransaction");
 			}
 		}
 		return userTransactionList;
 	}
 	
-	public void updateUserTransactionMap(UserTransaction newTransaction){
-		this.userTransactionMap.get(newTransaction.getAccountNumber()).add(newTransaction);
+	public void updateUserTransactionMap(UserTransaction newUserTransaction){
+		MultiValueHashMap.userTransactionMap.get(newUserTransaction.getAccountNumber()).add(newUserTransaction);
+		DatabaseMaintainer.addEntities(newUserTransaction.toString(), "UserTransaction");
 	}
 	
 	
