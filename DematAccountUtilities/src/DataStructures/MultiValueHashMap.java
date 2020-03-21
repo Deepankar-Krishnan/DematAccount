@@ -3,6 +3,8 @@
  */
 package DataStructures;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,16 +37,6 @@ public class MultiValueHashMap {
 		MultiValueHashMap.userTransactionMap = userTransactionMap;
 	}
 	
-	private static List <String> storeUserTransactionMap() {		
-		List <String> dataList = new ArrayList <String> ();		
-			for(int accountNumber: MultiValueHashMap.userTransactionMap.keySet()) {
-				for(UserTransaction userTransaction: MultiValueHashMap.userTransactionMap.get(accountNumber)) {
-					dataList.add(userTransaction.toString());
-				}
-			}
-		return dataList;
-	}
-	
 	private static void createUserTransactionMap(List <String> dataList) {
 		String [] userTransactionAttribute;
 		for(String userTransactionData: dataList) {
@@ -59,13 +51,30 @@ public class MultiValueHashMap {
 		}		
 	}
 	
-	public static List <UserTransaction> getUserTransactionMap(int accountNumber){
+	public static List <UserTransaction> getUserTransactionMap(int accountNumber, String shareName){
 		MultiValueHashMap.createUserTransactionMap(DatabaseMaintainer.readEntities("UserTransaction"));
 		List <UserTransaction> userTransactionList = new ArrayList <UserTransaction>();
 		if(MultiValueHashMap.userTransactionMap.containsKey(accountNumber)) {
 			for(UserTransaction userTransaction: MultiValueHashMap.userTransactionMap.get(accountNumber)) {
+				if (shareName.equals(userTransaction.getshareName())) {
 				userTransactionList.add(userTransaction);
-				DatabaseMaintainer.writeEntities(MultiValueHashMap.storeUserTransactionMap(), "UserTransaction");
+				}
+			}
+		}
+		return userTransactionList;
+	}
+	
+	public static List <UserTransaction> getUserTransactionMap(int accountNumber, LocalDate startDate, LocalDate endDate){
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate transactionDate;
+		MultiValueHashMap.createUserTransactionMap(DatabaseMaintainer.readEntities("UserTransaction"));
+		List <UserTransaction> userTransactionList = new ArrayList <UserTransaction>();
+		if(MultiValueHashMap.userTransactionMap.containsKey(accountNumber)) {
+			for(UserTransaction userTransaction: MultiValueHashMap.userTransactionMap.get(accountNumber)) {
+				transactionDate = (LocalDate.parse(userTransaction.getTransactionDate(), dateFormatter));
+				if (transactionDate.isAfter(startDate) && transactionDate.isBefore(endDate) || transactionDate.isEqual(startDate) || transactionDate.isEqual(endDate)) {
+				userTransactionList.add(userTransaction);
+				}
 			}
 		}
 		return userTransactionList;
