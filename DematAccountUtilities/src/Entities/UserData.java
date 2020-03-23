@@ -82,20 +82,5 @@ public class UserData{
         stringID = stringID.replaceAll("-", "");
         uniqueInteger = Integer.parseInt(stringID);
         return uniqueInteger;
-	}
-
-	public static void main (String [] args) {
-		for(int i =0; i<10;i++) {
-			UUID uniqueID = UUID.randomUUID();
-	        String stringID=""+uniqueID;        
-	        int uniqueInteger = stringID.hashCode();
-	        stringID = ""+uniqueInteger;
-	        stringID = stringID.replaceAll("-", "");
-	        uniqueInteger = Integer.parseInt(stringID);
-			System.out.println(i);
-			System.out.println(uniqueInteger);
-			}
-		
-	}
-	
+	}	
 }

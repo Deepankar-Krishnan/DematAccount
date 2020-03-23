@@ -57,9 +57,4 @@ public class UserShare {
 	public String toString() {
 		return this.accountNumber+","+this.shareName+","+this.averageSharePrice+","+this.shareQuantity;
 	}
-	
-	public static void main (String [] args) {
-		UserShare deepankar = new UserShare (719601, "Adani", 256.68, 100);
-		System.out.println(deepankar.toString());
-	}
 }

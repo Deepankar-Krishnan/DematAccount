@@ -22,12 +22,14 @@ public class UserTransaction {
 	private String transactionType;
 	private double sharePrice;
 	private int shareQuantity;
+	private double transactionChargeRate;
+	private double securitiesTransferTaxRate;
 	
 	public UserTransaction() {
 		
 	}
 	
-	public UserTransaction(int accountNumber, String shareName, String transactionType, double sharePrice, int shareQuantity) {
+	public UserTransaction(int accountNumber, String shareName, String transactionType, double sharePrice, int shareQuantity, double transactionChargeRate, double securitiesTransferTaxRate) {
 		this.accountNumber = accountNumber;
 		this.transactionID = getUniqueNumber();
 		this.transactionDate = LocalDate.now();
@@ -36,9 +38,11 @@ public class UserTransaction {
 		this.transactionType = transactionType;
 		this.sharePrice = sharePrice;
 		this.shareQuantity = shareQuantity;
+		this.transactionChargeRate = transactionChargeRate;
+		this.securitiesTransferTaxRate = securitiesTransferTaxRate;
 	}
 	
-	public UserTransaction(int accountNumber, int transactionID, String transactionDate, String transactionTime, String shareName, String transactionType, Double sharePrice, int shareQuantity) {
+	public UserTransaction(int accountNumber, int transactionID, String transactionDate, String transactionTime, String shareName, String transactionType, Double sharePrice, int shareQuantity, double transactionChargeRate, double securitiesTransferTaxRate) {
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		this.accountNumber = accountNumber;
@@ -49,6 +53,8 @@ public class UserTransaction {
 		this.transactionType = transactionType;
 		this.sharePrice = sharePrice;
 		this.shareQuantity = shareQuantity;
+		this.transactionChargeRate = transactionChargeRate;
+		this.securitiesTransferTaxRate = securitiesTransferTaxRate;
 	}
 	
 	public int getAccountNumber() {
@@ -84,6 +90,14 @@ public class UserTransaction {
 		return this.shareQuantity;
 	}
 	
+	public double getTransactionChargeRate() {
+		return this.transactionChargeRate;
+	}
+	
+	public double securitiesTransferTaxRate() {
+		return this.securitiesTransferTaxRate;
+	}
+	
 	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
@@ -114,31 +128,25 @@ public class UserTransaction {
 		this.shareQuantity = shareQuantity;
 	}
 	
+	public void setTransactionChargeRate(double transactionChargeRate) {
+		this.transactionChargeRate = transactionChargeRate;
+	}
+	
+	public void setSecuritiesTransferTaxRate (double securitiesTransferTaxRate) {
+		this.securitiesTransferTaxRate = securitiesTransferTaxRate;
+	}
+	
 	public String toString() {
-		return this.accountNumber+","+this.transactionID+","+this.getTransactionDate()+","+this.getTransactionTime()+","+this.shareName+","+this.transactionType+","+this.sharePrice+","+this.shareQuantity;
+		return this.accountNumber+","+this.transactionID+","+this.getTransactionDate()+","+this.getTransactionTime()+","+this.shareName+","+this.transactionType+","+this.sharePrice+","+this.shareQuantity+","+this.transactionChargeRate+","+this.securitiesTransferTaxRate;
 	}
 	
 	public static int getUniqueNumber() {
 		UUID uniqueID = UUID.randomUUID();
-        String stringID=""+uniqueID;        
+		String stringID=""+uniqueID;        
         int uniqueInteger = stringID.hashCode();
         stringID = ""+uniqueInteger;
         stringID = stringID.replaceAll("-", "");
         uniqueInteger = Integer.parseInt(stringID);
         return uniqueInteger;
 	}
-	
-	public static void main(String[] args) {
-		/*System.out.println("Testing the attributes");
-		UserTransaction deepankarTransaction = new UserTransaction (123456, "Adani", "Buy", 190.68, 150);
-		System.out.println(deepankarTransaction.toString());
-		System.out.println(deepankarTransaction.transactionDateTime);*/
-		System.out.println(LocalDate.now());
-		System.out.println(LocalDate.now().toString());
-		System.out.println(LocalTime.now());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		System.out.println(formatter.format(LocalTime.now()));
-		System.out.println(LocalTime.now().toString());
-	}
-
 }

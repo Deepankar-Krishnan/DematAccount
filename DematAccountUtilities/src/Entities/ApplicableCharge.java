@@ -1,40 +1,45 @@
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Database.DatabaseMaintainer;
+
 public class ApplicableCharge {
 	
-	private double transactionChargeRate;
-	private double securitiesTransferTaxRate;
+	private static double transactionChargeRate;
+	private static double securitiesTransferTaxRate;
 	
-	public ApplicableCharge() {
+	private ApplicableCharge() {
 		
 	}
 	
-	public ApplicableCharge(double transactionCharge, double securitiesTransferTax) {
-		this.transactionChargeRate = transactionCharge;
-		this.securitiesTransferTaxRate = securitiesTransferTax;
+	static {
+		String [] applicableChargeDetails = (DatabaseMaintainer.readEntities("ApplicableCharge")).get(0).split(",");
+		ApplicableCharge.transactionChargeRate = Double.parseDouble(applicableChargeDetails[0]);
+		ApplicableCharge.securitiesTransferTaxRate = Double.parseDouble(applicableChargeDetails[1]);
 	}
 	
-	public double getTransactionCharge() {
-		return this.transactionChargeRate;
+	public static double getTransactionChargeRate() {
+		
+		return ApplicableCharge.transactionChargeRate;
 	}
 
-	public double getSecuritiesTransferTax() {
-		return this.securitiesTransferTaxRate;
+	public static double getSecuritiesTransferTaxRate() {		
+		return ApplicableCharge.securitiesTransferTaxRate;
 	}
 
-	public void setTransactionCharge(double transactionCharge) {
-		this.transactionChargeRate = transactionCharge;
+	public static void setTransactionChargeRate(double transactionChargeRate) {
+		ApplicableCharge.transactionChargeRate = transactionChargeRate;
+		List <String> charges = new ArrayList<String> ();
+		charges.add(ApplicableCharge.transactionChargeRate+","+ApplicableCharge.securitiesTransferTaxRate);
+		DatabaseMaintainer.writeEntities(charges,"ApplicableCharge");
 	}
 	
-	public void setSecuritiesTransferTax(double securitiesTransferTax) {
-		this.securitiesTransferTaxRate = securitiesTransferTax;
-	}
-
-	public String toString() {
-		return this.transactionChargeRate+","+this.securitiesTransferTaxRate;
-	}
-
-	public static void main (String [] args) {
-		System.out.println("Testing");
+	public static void setSecuritiesTransferTaxRate(double securitiesTransferTaxRate) {
+		ApplicableCharge.securitiesTransferTaxRate = securitiesTransferTaxRate;
+		List <String> charges = new ArrayList<String> ();
+		charges.add(ApplicableCharge.transactionChargeRate+","+ApplicableCharge.securitiesTransferTaxRate);
+		DatabaseMaintainer.writeEntities(charges,"ApplicableCharge");
 	}
 }

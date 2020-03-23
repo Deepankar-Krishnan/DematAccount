@@ -1,0 +1,4 @@
+Apple,20.0,300
+Microsoft,30.0,400
+Amazon,50.0,60
+Facebook,40.0,500

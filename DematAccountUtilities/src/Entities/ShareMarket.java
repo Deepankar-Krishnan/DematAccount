@@ -49,13 +49,5 @@ public class ShareMarket {
 	
 	public String toString() {
 		return this.shareName+","+this.sharePrice+","+this.shareQuantity;
-	}
-	
-	public static void main (String [] args) {
-		System.out.println("Testing ShareMarket");
-		ShareMarket amazon = new ShareMarket ("Amazon", 1790.87, 100);
-		System.out.println("Share Name/tShare Price/tShare Quantity");
-		System.out.println(amazon.toString());
-	}
-	
+	}	
 }
