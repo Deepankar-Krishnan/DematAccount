@@ -15,6 +15,7 @@ import Entities.UserTransaction;
 
 public class CustomerFunctions {
 	
+	//Method to test create user
 	public static void createUser() {
 		System.out.println("Enter the desired user name:");
 		Scanner scanInput = new Scanner(System.in);
@@ -29,6 +30,7 @@ public class CustomerFunctions {
 		scanInput.close();
 	}
 	
+	//Method to test create share
 	public static void createShare() {
 		System.out.println("Enter the share name:");
 		Scanner scanInput = new Scanner(System.in);
@@ -41,11 +43,12 @@ public class CustomerFunctions {
 		ShareMarketHashMap.addShare(newShare);
 		scanInput.close();
 	}
+	
 	//Can be checked with the account number - 1813312812
 	public static void buyShares(int accountNumber) {
 		Scanner userInput = new Scanner(System.in);
 		//Need to work on the formatting the display text
-		System.out.println("Share Name\tSharePrice\tAvailableQuantity");
+		System.out.println("Share Name,SharePrice,AvailableQuantity");
 		Map<String, ShareMarket> availableShares = ShareMarketHashMap.getShareMarket();
 		String shareName;
 		double sharePrice;
@@ -54,7 +57,7 @@ public class CustomerFunctions {
 			shareName = availableShares.get(company).getShareName();
 			sharePrice = availableShares.get(company).getSharePrice();
 			availableQuantity = availableShares.get(company).getShareQuantity();
-			System.out.println(shareName+"\t"+sharePrice+"\t"+availableQuantity);
+			System.out.println(shareName+","+sharePrice+","+availableQuantity);
 		}
 		//The above part can be treated as one segment
 		//Have to come up with better checks for below
@@ -97,6 +100,7 @@ public class CustomerFunctions {
 		MultiValueHashMap.updateUserTransactionMap(new UserTransaction(accountNumber,buyShare,"Bought",availableShares.get(buyShare).getSharePrice(),buyQuantity,ApplicableCharge.getTransactionChargeRate(),ApplicableCharge.getSecuritiesTransferTaxRate()));						
 		System.out.println("Transaction successful. Your current account balance after deducting transaction charges: "+(userCurrentAccountBalance-totalPurchaseCost));
 	}
+	
 	//Can be checked with the account number - 1813312812
 	public static void sellShares(int accountNumber) {
 		Map <String, UserShare> currentUserShares = HashInHash.getUserShareMap(accountNumber);
@@ -109,12 +113,12 @@ public class CustomerFunctions {
 		double sharePrice;
 		int availableQuantity;
 		//Need to work on the formatting the display text
-		System.out.println("Share Name\tSharePrice\tAvailableQuantity");
+		System.out.println("Share Name,SharePrice,AvailableQuantity");
 		for(String userShare:currentUserShares.keySet()){
 			shareName = currentUserShares.get(userShare).getShareName();
 			sharePrice = currentUserShares.get(userShare).getAverageSharePrice();
 			availableQuantity = currentUserShares.get(userShare).getShareQuantity();
-			System.out.println(shareName+"\t"+sharePrice+"\t"+availableQuantity);
+			System.out.println(shareName+","+sharePrice+","+availableQuantity);
 		}
 		//The above part can be treated as one segment
 		//Have to come up with better checks for below
